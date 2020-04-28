@@ -1,0 +1,470 @@
+/*Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.*/
+
+:root {
+	/*Using colour scheme https://color.adobe.com/TD-Colors---Option-3-color-theme-10394433/*/
+	--colour1:#2B3A42;
+	--colour2:#3F5765;
+	--colour3:#BDD4DE;
+	--colour4:#EFEFEF;
+	--colour5:#FF5035;
+	
+	--buttonFont:Helvetica;
+	--inputFont:Helvetica;
+}
+
+body{
+    margin: 0px;
+    background-color: black;
+}
+
+#playerUI {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	/*top: 0;
+	left: 0;*/
+	z-index: 10;
+}
+
+#statsContainer{
+	background-color: rgba(0,0,0,0.8);
+	text-align: left;
+	display: none;
+}
+
+#stats{
+	font-size: 14px;
+	font-weight: bold;
+	padding: 6px;
+	color: lime;
+}
+
+canvas{
+    image-rendering: crisp-edges;
+    position: absolute;
+}
+
+video{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#player{
+	width: 1280px;
+	height: 720px;
+	position: relative;
+	background-color: #000;
+}
+
+#overlay{
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px; /* future proofing */
+	border-bottom-left-radius: 5px; /* future proofing */
+	-khtml-border-bottom-right-radius: 5px; /* for old Konqueror browsers */
+	-khtml-border-bottom-left-radius: 5px; /* for old Konqueror browsers */
+	
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+	
+	position: absolute;
+	padding: 4px;
+	top: 0;
+	right: 2%;
+	z-index: 100;
+	border: 2px solid var(--colour4);
+	border-top-width: 0px;
+}
+
+.overlay {
+    background-color: var(--colour2);
+	font-family: var(--buttonFont);
+	font-weight: lighter;
+	color: var(--colour4);
+}
+
+.goHome-button {
+	top: 0px;
+	right: 0px;
+	width:36px;
+	height:36px;
+	position: fixed;
+	z-index: 200;
+}
+
+.goHome-img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#overlayButton:hover{
+	cursor:pointer;
+}
+
+#overlayButton{
+	text-align: right;
+	font-size: 40px;
+}
+
+#overlaySettings{
+	width: 300px;
+	padding: 4px;
+	display: none;
+}
+
+#videoMessageOverlay{
+	z-index: 20;
+	color: var(--colour4);;
+	font-size: 1.8em;
+	position: absolute;
+	margin: auto;
+	font-family: var(--inputFont);;
+	width: 100%;
+}
+
+#videoPlayOverlay{
+	z-index: 30;
+	position: absolute;
+	color: var(--colour4);
+	font-size: 1.8em;
+	font-family: var(--inputFont);
+	width: 100%;
+	height: 100%;
+	/* background-color: rgba(100, 100, 100, 0.3); */
+	/* background:rgb(35, 35, 35) url(images/new_bg1.png) no-repeat center bottom/contain; */
+	background:#000 url(/images/new_bg3.png) no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+	-o-background-size: cover;
+	
+	overflow-x: hidden;
+	overflow-y: hidden;
+	/* border: 2px solid red; */
+}
+
+.titlebar{
+	position: absolute;
+	padding-top: 20px;
+	font-size:28px;
+	width:100%;
+	height:64px;
+	line-height:64px;
+	color:#fff;
+	z-index: 2;
+	/* border: 1px solid green; */
+}
+
+.titlebar .title{
+	font-size: 24px;
+	padding-left:40px;
+	text-align: left;
+	background-image: -webkit-gradient(linear, left 0, right 0, from(rgb(4,141,198)), to(rgb(28,246,217)));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.titlebar .logoText{
+	font-size: 20px;
+	font-weight: lighter;
+	text-align: right;
+	padding:0 40px 0 10px;
+	float: right;
+}
+
+.titlebar .logoImage {
+	width:36px; 
+	height: 18px; 
+	line-height: 18px; 
+	display: inline-block; 
+	text-align: right; 
+	vertical-align:baseline; 
+	background-image: url(/images/cloud.png);
+	background-repeat: no-repeat; 
+	background-size: auto 18px;
+}
+
+/* State for element to be clickable */
+.clickableState{
+	/* align-items: center; */
+	justify-content: center;
+	display: flex;
+	cursor: pointer;
+}
+
+/* State for element to show text, this is for informational use*/
+.textDisplayState{
+	display: flex;
+}
+
+#messageOverlay {
+	text-align: center;
+	margin: auto;
+	padding: auto;
+}
+
+/* State to hide overlay, WebRTC communication is in progress and or is playing */
+.hiddenState{
+	display: none;
+}
+
+#playButton{
+	display: inline-block;
+	height: auto;
+}
+
+img#playButton{
+    position:relative;
+    padding:0px;
+    margin:0px;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+}
+
+#UIInteraction{
+	position: fixed;
+}
+
+#UIInteractionButtonBoundary{
+	padding: 2px;
+}
+
+#UIInteractionButton{
+	cursor: pointer;
+}
+
+.settings-text{
+	color: var(--colour4);
+	vertical-align: middle;
+	font-size: 18px;
+	font-weight: normal;
+	display: inline-block;
+}
+
+.overlay-button{
+	line-height: 1.1;
+	padding: 1px 6px;
+}
+
+.btn-overlay{
+	float: right;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.btn-flat{
+	background: var(--colour4);
+	border: 2px solid var(--colour5);
+	font-weight: bold;
+	cursor: pointer;
+	font-family: var(--buttonFont);
+	font-size: 10px;
+	color: var(--colour5);
+	border-radius: 5px;
+	height: 17px;
+}
+
+.btn-flat:disabled{
+	background: var(--colour4);
+	border-color: var(--colour3);
+	color: var(--colour3);
+	cursor: default;
+}
+
+.btn-flat:active{
+	border-color: var(--colour2);
+	color: var(--colour2);
+}
+
+.btn-flat:focus{
+	outline: none;
+}
+/*** Toggle Switch styles ***/
+.tgl-switch {
+  float: right;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.tgl-switch .tgl {
+	display:none;
+}
+
+.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-slider {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.tgl::-moz-selection, .tgl:after::-moz-selection, .tgl:before::-moz-selection, .tgl *::-moz-selection, .tgl *:after::-moz-selection, .tgl *:before::-moz-selection, .tgl + .tgl-slider::-moz-selection {
+  background: none;
+}
+.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-slider::selection {
+  background: none;
+}
+
+.tgl + .tgl-slider {
+  outline: 0;
+  display: block;
+  width: 40px;
+  height: 18px;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.tgl + .tgl-slider:after, .tgl + .tgl-slider:before {
+  position: relative;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+}
+.tgl + .tgl-slider:after {
+  left: 0;
+}
+.tgl + .tgl-slider:before {
+  display: none;
+}
+
+.tgl-flat + .tgl-slider {
+  padding: 2px;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  background: #fff;
+  border: 3px solid var(--colour4);
+  border-radius: 2em;
+}
+
+.tgl-flat + .tgl-slider:after {
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  background: var(--colour4);
+  content: "";
+  border-radius: 1em;
+}
+
+.tgl-flat:checked + .tgl-slider {
+  border: 3px solid var(--colour5);
+}
+
+.tgl-flat:checked + .tgl-slider:after {
+  left: 50%;
+  background: var(--colour5);
+}
+
+
+@media only screen and (max-width: 1920px) {
+    .proContainer{
+        position:relative;
+        background:#fff;
+        z-index:1000;
+        width:100vw;
+        height:100vh;
+        /* background:#000 url(images/new_bg2.png) no-repeat center bottom/contain; */
+        background:#000 url(/images/new_bg3.png) no-repeat center center fixed;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        /* overflow:scroll */
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    .proContainer{
+        position:relative;
+        background:#fff;
+        z-index:1000;
+        width:100vw;
+        height:100vh;
+        background:#000 url(/images/new_bg1.png) no-repeat center center fixed;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        /* overflow:scroll */
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+}
+
+.proContainer .titlebar{
+	padding-top: 20px;
+	font-size:28px;
+	width:100%;
+	height:64px;
+	line-height:64px;
+	color:#fff;
+	/* border: 1px solid green; */
+}
+
+.proContainer .titlebar .title{
+	font-size: 24px;
+	padding-left:40px;
+	text-align: left;
+	background-image: -webkit-gradient(linear, left 0, right 0, from(rgb(4,141,198)), to(rgb(28,246,217)));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.proContainer .titlebar .logoText{
+	font-size: 20px;
+	font-weight: lighter;
+	text-align: right;
+	padding:0 40px 0 10px;
+	float: right;
+}
+
+.proContainer .titlebar .logoImage {
+	width:36px; 
+	height: 18px; 
+	line-height: 18px; 
+	display: inline-block; 
+	text-align: right; 
+	vertical-align:baseline; 
+	background-image: url(/images/cloud.png);
+	background-repeat: no-repeat; 
+	background-size: auto 18px;
+}
+
+.proContainer .case{
+	text-align: center;
+	font-size:26px;
+	height: 74px;
+	font-weight: lighter;
+	color:#fff;
+}
+.proContainer .case span{
+	font-size:16px;
+	background-image: -webkit-gradient(linear, left 0, right 0, from(rgb(4,141,198)), to(rgb(28,246,217)));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	display:block
+}
+
+.proContainer .waitingMessage {
+	color: var(--colour4);
+  font-size: 1.8em;
+  font-family: var(--inputFont);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+
+/*** Toggle Switch styles ***/
